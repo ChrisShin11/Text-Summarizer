@@ -1,12 +1,12 @@
 import requests 
 from flask import Flask, render_template, url_for
 from flask import request as req
+from dotenv import load_dotenv
+load_dotenv()
 
 app = Flask(__name__)
 
 # Define your API token
-api_token =AjlHTWGAuDb"
-
 @app.route("/", methods=["GET", "POST"])
 def Index():
     return render_template("index.html")
@@ -14,8 +14,8 @@ def Index():
 @app.route("/Summarize", methods=["GET", "POST"])
 def Summarize():
     if req.method == "POST":
-        API_URL = "https://api-inference.huggingface.co/models/sshleifer/distilbart-cnn-12-6"
-        headers = {"Authorization": f"Bearer {api_token}"}
+        API_URL = "https://api-inference.huggingface.co/models/Falconsai/medical_summarization"
+        headers = {"Authorization": "Bearer {API_KEY}"}
 
         data = req.form["data"]
 
@@ -27,7 +27,7 @@ def Summarize():
             "inputs": data,
         })
 
-        return render_template("index.html", result=output[0]["summary_text"])
+        return render_template("index.html", result=output)
     else:
         return render_template("index.html")
 
